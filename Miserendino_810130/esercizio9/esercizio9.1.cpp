@@ -11,7 +11,7 @@ TApplication myapp("app",NULL,NULL); // crea l'interfaccia grafica
 int main(){
   double theta1[N];
   EsperimentoPrisma foo;
-  TCanvas tela;
+  TCanvas tela1;
    TH1D histo("theta1","theta1",100,foo.Gettheta1in()-1E-3, foo.Gettheta1in()+1E-3); // crea l'istogramma
    for (int i=0;i<N; ++i){
      foo.Esegui();

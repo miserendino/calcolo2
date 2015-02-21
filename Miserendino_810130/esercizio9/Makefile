@@ -1,7 +1,8 @@
 #Makefile for the TNDS laboratory 	
 
 OBJECTS := $(wildcard *.o)
-DEBUGFLAGS := -O0 -std=c++11 -pg -g -D DEBUG -Wall -v -fmessage-length=0 -flto-report -pedantic -time
+#DEBUGFLAGS := -O0 -std=c++11 -pg -g -D DEBUG -Wall -v -fmessage-length=0 -flto-report -pedantic -time
+DEBUGFLAGS := -std=gnu++11
 ROOTLIBS := $(shell root-config --glibs)
 ROOTFLAGS := $(shell root-config --cflags)
 EXECUTABLES := esercizio9.0 esercizio9.1 esercizio9.2

@@ -13,9 +13,11 @@ class EsperimentoPrisma {
     void Esegui();
     void Analizza();
     double Gettheta1();
+    double Gettheta0();
     double Gettheta2();
     double Gettheta1in();
     double Gettheta2in();
+    double Gettheta0in();
   private:                
     double lambda1,lambda2; 
     double alpha,sigmat;
@@ -47,8 +49,8 @@ EsperimentoPrisma::EsperimentoPrisma() :
   t2_input = t0_input+dm;
 }
 void EsperimentoPrisma::Esegui(){
-  std::normal_distribution<double> distribution0(t0_input,sigmat);
-  t0_misurato=distribution0(generator);
+  std::normal_distribution<double> distribution0(t0_input,sigmat);        // in questo modo uso la STD per creare le grandezze come se fossero una gaussiana cetrata dove
+  t0_misurato=distribution0(generator);                                   // voglio io e con RMS che voglio io
   std::normal_distribution<double> distribution1(t1_input,sigmat);
   t1_misurato=distribution1(generator);
   std::normal_distribution<double> distribution2(t2_input,sigmat);
@@ -60,6 +62,15 @@ double EsperimentoPrisma::Gettheta1(){
 double EsperimentoPrisma::Gettheta2(){
   return t2_misurato;
 }
+
+double EsperimentoPrisma::Gettheta0(){
+  return t0_misurato;
+}
+
+double EsperimentoPrisma::Gettheta0in(){
+  return t0_input;
+}
+
 double EsperimentoPrisma::Gettheta1in(){
   return t1_input;
 }
