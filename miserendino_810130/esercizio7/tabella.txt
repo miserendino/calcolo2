@@ -1,0 +1,17 @@
+Metodo di integrazione alla Simpson: valutazione dell'errore al crescere del numero di passi
+   nstep         errore
+      10    0.000109517
+      20    6.78444e-06
+      40    4.23093e-07
+      80    2.64288e-08
+     160    1.65157e-09
+     320    1.03221e-10
+     640    6.45217e-12
+    1280    4.03677e-13
+    2560     2.4869e-14
+    5120    8.88178e-16
+   10240    6.66134e-15
+   20480    3.33067e-15
+   40960    2.22045e-15
+   81920    2.22045e-15
+  163840    1.13243e-14
