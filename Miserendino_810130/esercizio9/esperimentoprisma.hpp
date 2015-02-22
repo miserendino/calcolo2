@@ -18,6 +18,10 @@ class EsperimentoPrisma {
     double Gettheta1in();
     double Gettheta2in();
     double Getdm1();
+    double Getn1in();
+    double Getn2in();
+    double Getn1();
+    double Getn2();
     double Getdm2();
     double Getdm1in();
     double Getdm2in();
@@ -89,6 +93,22 @@ double EsperimentoPrisma::Getdm1(){
 }
 double EsperimentoPrisma::Getdm2(){
   return dm2;
+}
+
+double EsperimentoPrisma::Getn1in(){
+  return n1_input;
+}
+
+double EsperimentoPrisma::Getn2in(){
+  return n2_input;
+}
+
+double EsperimentoPrisma::Getn1(){
+  return n1_misurato;
+}
+
+double EsperimentoPrisma::Getn2(){
+  return n2_misurato;
 }
 
 double EsperimentoPrisma::Getdm1in(){

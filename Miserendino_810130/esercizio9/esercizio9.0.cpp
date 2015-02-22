@@ -55,22 +55,30 @@ std::cout << theta1[i] << '\t' << theta2[i] << std::endl;
   tela3.Divide(3,1);
   tela3.cd(1);
    // calcolo dei residui per dm1,2
-      TH2F corrdm12("corrdm12","Residui dm1,2",100,-0.002,0.002,100,-0.002,0.002);
-  double coor2,coor1;
-  // *******************************************************************************************
+      TH2F corrdm12("corrdm12","Residui dm1,2",100,-0.002,0.003,100,-0.002,0.003);
+// *******************************************************************************************
    TH1D histo5("dm1","dm1",100,(foo.Gettheta1in()-foo.Gettheta0in())-1E-3,(foo.Gettheta1in()-foo.Gettheta0in())+1E-3); // crea l'istogramma
+// *******************************************************************************************
+   TH1D n1("n1", "Distribuzione di n1", 100, -0.001, 0.001); 
+   TH1D n2("n2", "Distribuzione di n2", 100, -0.001, 0.001);
+   TH2F corrn12("corrn12","Residui n1,2",100,-0.001,0.001,100,-0.001,0.001);
+// *******************************************************************************************
+double u,v;
    for (int i=0;i<N; ++i){
      foo.Esegui();
      foo.Analizza();
+      u = foo.Getn1() - foo.Getn1in();
+      n1.Fill(u);
+      v = foo.Getn2() - foo.Getn2in();
+      n2.Fill(u);
+      corrn12.Fill(u,v);
   dm1[i]=foo.Getdm1();
   dm2[i]=foo.Getdm2();
-  coor1=foo.Getdm1()-foo.Getdm1in();
-  coor2=foo.Getdm2()-foo.Getdm2in();
-   corrdm12.Fill(coor1,coor2);
+   corrdm12.Fill(dm1[i],dm2[i]);
    histo5.Fill(dm1[i]); // riempe l'istogramma
 #ifdef DEBUG
-   std::cout << coor1 << " " << coor2 << std::endl;
    std::cout << dm1[i] <<  std::endl;
+   std::cout << u << " " << v << std::endl;
 #endif
    }
    histo5.GetXaxis()->SetTitle("X[rad]"); // da il nome all'asse X
@@ -91,14 +99,18 @@ std::cout << theta1[i] << '\t' << theta2[i] << std::endl;
    
    corrdm12.GetXaxis()->SetTitle("Discrepanza dm1 [rad]");
    corrdm12.GetYaxis()->SetTitle("Discrepanza dm2 [rad]");
-
    tela3.cd(3);
    corrdm12.Draw();
+   TCanvas tela4("c3","c3",1200,400);
+  tela4.Divide(3,1);
 
 
-
-
-
+tela4.cd(1);
+n1.Draw();
+tela4.cd(2);
+n2.Draw();
+tela4.cd(3);
+corrn12.Draw();
 
 
 
