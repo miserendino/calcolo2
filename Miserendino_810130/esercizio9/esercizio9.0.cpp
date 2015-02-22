@@ -1,5 +1,6 @@
 #include <random>
 #include <iostream>
+#include <iomanip>
 #include "esperimentoprisma.hpp"
 #include "TCanvas.h"
 #include "TApplication.h"
@@ -59,9 +60,12 @@ std::cout << theta1[i] << '\t' << theta2[i] << std::endl;
 // *******************************************************************************************
    TH1D histo5("dm1","dm1",100,(foo.Gettheta1in()-foo.Gettheta0in())-1E-3,(foo.Gettheta1in()-foo.Gettheta0in())+1E-3); // crea l'istogramma
 // *******************************************************************************************
-   TH1D n1("n1", "Distribuzione di n1", 100, -0.001, 0.001); 
-   TH1D n2("n2", "Distribuzione di n2", 100, -0.001, 0.001);
-   TH2F corrn12("corrn12","Residui n1,2",100,-0.001,0.001,100,-0.001,0.001);
+   TH1D n1("n1", "Distribuzione di n1", 100, -(foo.Getn1()-foo.Getn1in()), (foo.Getn1()-foo.Getn1in())); 
+   TH1D n2("n2", "Distribuzione di n2", 100, -(foo.Getn2()-foo.Getn2in()), (foo.Getn2()-foo.Getn2in())); 
+   TH2F corrn12("corrn12","Residui n1,2",100,-(foo.Getn2()-foo.Getn2in()), (foo.Getn2()-foo.Getn2in()),100,-(foo.Getn2()-foo.Getn2in()), (foo.Getn2()-foo.Getn2in()));
+   TH1F A("A", "Distribuzione di A", 100, -foo.GetA(), foo.GetA());
+   TH1F B("B", "Distribuzione di B", 100, -foo.Getbin(), foo.Getbin());
+   TH2F corrAB("corrAB","Residui A,B",100, -(foo.Getain()) , foo.Getain(),100,-foo.Getbin(),foo.Getbin());
 // *******************************************************************************************
 double u,v;
    for (int i=0;i<N; ++i){
@@ -76,10 +80,6 @@ double u,v;
   dm2[i]=foo.Getdm2();
    corrdm12.Fill(dm1[i],dm2[i]);
    histo5.Fill(dm1[i]); // riempe l'istogramma
-#ifdef DEBUG
-   std::cout << dm1[i] <<  std::endl;
-   std::cout << u << " " << v << std::endl;
-#endif
    }
    histo5.GetXaxis()->SetTitle("X[rad]"); // da il nome all'asse X
    histo5.GetYaxis()->SetTitle("Y"); // da il nome all'asse Y
@@ -89,10 +89,15 @@ double u,v;
    TH1D histo6("dm2","dm2",100,(foo.Gettheta2in()-foo.Gettheta0in())-1E-3,(foo.Gettheta2in()-foo.Gettheta0in())+1E-3); // crea l'istogramma
    for (int i=0;i<N; ++i){
    histo6.Fill(dm2[i]); // riempe l'istogramma
-#ifdef DEBUG
-   std::cout << dm2[i] <<  std::endl;
-#endif
-   }
+
+      u = foo.GetA() - foo.Getain();
+      A.Fill(u);
+
+      v = foo.GetB() - foo.Getbin();
+      B.Fill(v);
+
+      corrAB.Fill(u,v);
+      }
    histo6.GetXaxis()->SetTitle("X[rad]"); // da il nome all'asse X
    histo6.GetYaxis()->SetTitle("Y"); // da il nome all'asse Y
    histo6.Draw();
@@ -103,6 +108,38 @@ double u,v;
    corrdm12.Draw();
    TCanvas tela4("c3","c3",1200,400);
   tela4.Divide(3,1);
+   
+//Stampa dei risultati
+   cout << endl;
+   cout << "  t0 = " << setprecision(5) << foo.Get_mediat0() << " rad" << endl;
+   cout << "  t1 = " << setprecision(5) << foo.Get_mediat1() << " rad" << endl;
+   cout << "  t2 = " << setprecision(5) << foo.Get_mediat2() << " rad" << endl << endl;
+
+   cout << "    sigmat = " << foo.Get_sigmat() << " rad" << endl << endl;
+
+   cout << "  dm1 = " << setprecision(5) << foo.Getdm1() << " rad" << endl;
+   cout << "  dm2 = " << setprecision(7) << foo.Getdm2() << " rad" << endl << endl;
+
+   cout << "    Discrepanza su dm1 = " << setprecision(2) << foo.Getdm1() - foo.Getdm1in() << " rad" << endl;
+   cout << "    Discrepanza su dm2 = " << setprecision(2) << foo.Getdm2() - foo.Getdm2in() << " rad" << endl << endl;
+
+   cout << "       Correlazione tra dm1 e dm2 = " << setprecision(4) << foo.Get_corrdm() << endl << endl;
+
+   cout << "  n1 = " << setprecision(6) << foo.Getn1() << endl;
+   cout << "  n2 = " << setprecision(6) << foo.Getn2() << endl << endl;
+
+   cout << "    Discrepanza su n1 = " << setprecision(2) << foo.Getn1() - foo.Getn1in() << endl;
+   cout << "    Discrepanza su n2 = " << setprecision(2) << foo.Getn2() - foo.Getn2in() << endl << endl;
+
+   cout << "       Correlazione tra n1 ed n2 = " << setprecision(4) << foo.Get_corrn() << endl << endl;
+
+   cout << "  A = " << setprecision(5) << foo.GetA() << endl;
+   cout << "  B = " << setprecision(4) << foo.GetB() << " m2" << endl << endl;
+
+   cout << "    sigmaA = " << setprecision(2) << foo.Get_devA() << endl;
+   cout << "    sigmaB = " << setprecision(2) << foo.Get_devB() << " m2" << endl << endl;
+
+   cout << "       Correlazione tra A e B = " << setprecision(4) << foo.Get_corrAB() << endl << endl;
 
 
 tela4.cd(1);
@@ -111,9 +148,14 @@ tela4.cd(2);
 n2.Draw();
 tela4.cd(3);
 corrn12.Draw();
-
-
-
+TCanvas tela5("c4","c4",1200,400);
+  tela5.Divide(3,1);
+tela5.cd(1);
+A.Draw();
+tela5.cd(2);
+B.Draw();
+tela5.cd(3);
+corrAB.Draw();
    myapp.Run(true);
    tela1.Close();
    tela2.Close();
