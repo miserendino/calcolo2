@@ -3,8 +3,11 @@
 #include <iomanip>
 #include <random>
 #include "random.hpp"     // per usare il generatore di numeri casuali
+#include <ctime>
 #include <climits>
+#include <cstdlib>
 #include <algorithm>
+#include <climits>
 using namespace std;
 #ifndef __INTEGRATORE_HPP__
 #define __INTEGRATORE_HPP__
@@ -103,14 +106,13 @@ double integral::trapezi(){
 }
 
 double integral::montecarlo(int nstep){
-	v = new double[_dim];
-	Random random(5);			//dichiarazione di un generatore di numeri casuali
-
+    srand (time(NULL));
+	double *v = new double[_dim];
 	double Ns=0.;
 	for(unsigned int i=0; i<nstep; ++i){		//ciclo per il numero di punti richiesto
 	double d =0.;
-	for(unsigned int j=0; j<nstep; ++j){
-		v[j] = Ma + (Mb - Ma)*random.Rand01();
+	for(unsigned int j=0; j<_dim; ++j){
+		v[j] = Ma + (Mb - Ma)*(rand()/double(RAND_MAX));
          d = d + v[j]*v[j];
 	
 	}

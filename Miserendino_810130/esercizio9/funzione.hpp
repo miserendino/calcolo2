@@ -151,14 +151,17 @@ double seno::eval(double x){
 
 // funzione caratteristica di un insieme
 
-class funzione_caratteristica : public funzionebase{
+class caratteristica : public funzionebase{
   public:
-  funzione_caratteristica(double );
-  ~funzione_caratteristica(){}
-  virtual double eval();
+  caratteristica(double raggio){ _raggio=raggio;}
+  ~caratteristica(){}
+  virtual double eval(double);
   private: 
 double _raggio;
 };
 
-
+double caratteristica::eval(double x){
+  if(x<_raggio)  return 1;
+  else  return 0;
+}
 #endif
