@@ -41,7 +41,7 @@ class EsperimentoPrisma {
     double Get_corrAB();
   private:                
     double lambda1,lambda2; 
-    double alpha,sigmat;
+    double alpha;
     double a_input, a_misurato;
     double b_input, b_misurato;
     double n1_input, n1_misurato;
@@ -71,9 +71,13 @@ EsperimentoPrisma::EsperimentoPrisma() :
   lambda1(579.1E-9),
   lambda2(404.7E-9),
   alpha(60*M_PI/180.),
- sigmat(0.3E-3),
+ _sigmat(0.3E-3),
   a_input(2.7),
-  b_input(60000E-18)
+  b_input(60000E-18),
+  _sommat0(0.),
+  _sommat1(0.),
+  _sommat2(0.),
+  _cont(0.)
 {
   //calcolo degli indici di rifrazione attesi
   n1_input = sqrt(a_input+b_input/(pow(lambda1,2)));
@@ -81,9 +85,9 @@ EsperimentoPrisma::EsperimentoPrisma() :
 // calcolo dei valori attesi degli angoli misurati
   t0_input = M_PI/2;  //theta0 e' arbitrario
   dm1in = 2.*asin(n1_input*sin(0.5*alpha))-alpha;
-  t1_input = t0_input+dm1;
+  t1_input = t0_input+dm1in;
   dm2in = 2.*asin(n2_input*sin(0.5*alpha))-alpha;
-  t2_input = t0_input+dm2;
+  t2_input = t0_input+dm2in;
   //Inizializzazione delle varibili per calcolare i coefficienti di correlazione
       _x_dm = 0.;
       _y_dm = 0.;
@@ -102,11 +106,11 @@ EsperimentoPrisma::EsperimentoPrisma() :
       _xy_AB = 0.; 
 }
 void EsperimentoPrisma::Esegui(){
-  std::normal_distribution<double> distribution0(t0_input,sigmat);        // in questo modo uso la STD per creare le grandezze come se fossero una gaussiana cetrata dove
+  std::normal_distribution<double> distribution0(t0_input,_sigmat);        // in questo modo uso la STD per creare le grandezze come se fossero una gaussiana cetrata dove
   t0_misurato=distribution0(generator);                                   // voglio io e con RMS che voglio io
-  std::normal_distribution<double> distribution1(t1_input,sigmat);
+  std::normal_distribution<double> distribution1(t1_input,_sigmat);
   t1_misurato=distribution1(generator);
-  std::normal_distribution<double> distribution2(t2_input,sigmat);
+  std::normal_distribution<double> distribution2(t2_input,_sigmat);
   t2_misurato=distribution2(generator);
    _sommat0 = _sommat0+t0_misurato;
 
@@ -246,8 +250,8 @@ dm1=t1_misurato-t0_misurato;
 dm2=t2_misurato-t0_misurato;
 n1_misurato=(sin(dm1+alpha)/2)/sin(alpha/2);
 n2_misurato=(sin(dm2+alpha)/2)/sin(alpha/2);
-a_misurato=pow(lambda2,2)*pow(n2_misurato,2)-pow(n1_misurato,2)*pow(lambda2,2);
-b_misurato=(pow(n2_misurato,2)-pow(n1_misurato,2))/(1/pow(lambda2,2)-1/pow(lambda1,2));
+a_misurato=pow(lambda2,2)*pow(n2_misurato,2)-pow(n1_misurato,2)*pow(lambda1,2)/(pow(lambda2,2)-pow(lambda1,2));
+b_misurato=(pow(n2_misurato,2)-pow(n1_misurato,2))/(pow(lambda2,-2)-pow(lambda1,-2));
 
      _devA = _devA + pow(a_input-a_misurato,2);
      _devB = _devB + pow(b_input-b_misurato,2);

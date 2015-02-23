@@ -60,9 +60,9 @@ histo1.Fill(theta1[i],theta2[i]);
    TH1D n1("n1", "Distribuzione di n1", 100, -(foo.Getn1()-foo.Getn1in()), (foo.Getn1()-foo.Getn1in())); 
    TH1D n2("n2", "Distribuzione di n2", 100, -(foo.Getn2()-foo.Getn2in()), (foo.Getn2()-foo.Getn2in())); 
    TH2F corrn12("corrn12","Residui n1,2",100,-(foo.Getn2()-foo.Getn2in()), (foo.Getn2()-foo.Getn2in()),100,-(foo.Getn2()-foo.Getn2in()), (foo.Getn2()-foo.Getn2in()));
-   TH1F A("A", "Distribuzione di A", 100, -foo.Getain(), foo.Getain());
-   TH1F B("B", "Distribuzione di B", 100, foo.GetB()-3E-11, foo.GetB()+3E-11);
-   TH2F corrAB("corrAB","Residui A,B",100, (foo.Getain())-1E-3 , foo.Getain()+1E-2,100,foo.Getbin()-1E-4,foo.Getbin()+1E-4);
+   TH1F A("A", "Distribuzione di A", 100, foo.GetA()-1E-1, foo.GetA()+1E-1);
+   TH1F B("B", "Distribuzione di B", 100, foo.GetB()-1E-4, foo.GetB()+1E-4);
+   TH2F corrAB("corrAB","Residui A,B",100, (foo.Getain())-1E-2 , foo.Getain()+1E-2,100,foo.Getbin()-1E-4,foo.Getbin()+1E-4);
 // *******************************************************************************************
 double u,v;
    for (int i=0;i<N; ++i){
