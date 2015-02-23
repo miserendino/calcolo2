@@ -1,0 +1,8 @@
+# Makefile.arch used for include g++4.8 compilator in laboratory
+# My default shell in lab is zsh
+ifeq ($(shell echo $0),-zsh)
+CXX := /opt/centos/devtoolset-1.1/root/usr/bin/g++
+else
+CXX := $(CXX)
+endif
+
