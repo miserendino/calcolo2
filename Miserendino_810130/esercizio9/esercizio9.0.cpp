@@ -17,30 +17,6 @@ EsperimentoPrisma foo;
    histo1.Draw("SURF3");
    TCanvas tela2("c1","c1",1200,400);
    tela2.Divide(3,1);     // diveide la seconda canvas in tre parti distinte
-  tela2.cd(3);            // sposta il cursore sulla prima parte della canvas
-   TH1D histo3("theta2","theta2",100,foo.Gettheta2in()-1E-3, foo.Gettheta2in()+1E-3); // crea l'istogramma
-   for (int i=0;i<N; ++i){
-   histo3.Fill(theta2[i]); // riempe l'istogramma
-   }
-   histo3.GetXaxis()->SetTitle("X[rad]"); // da il nome all'asse X
-   histo3.GetYaxis()->SetTitle("Y"); // da il nome all'asse Y
-   histo3.Draw();
-  tela2.cd(2);            // sposta il cursore sulla prima parte della canvas
-   TH1D histo2("theta1","theta1",100,foo.Gettheta1in()-1E-3, foo.Gettheta1in()+1E-3); // crea l'istogramma
-   histo2.GetXaxis()->SetTitle("X[rad]"); // da il nome all'asse X
-   histo2.GetYaxis()->SetTitle("Y"); // da il nome all'asse Y
-   for (int i=0;i<N; ++i){
-   histo2.Fill(theta1[i]); // riempe l'istogramma
-   }
-   histo2.Draw();
-   tela2.cd(1);
-   TH1D histo4("theta0","theta0",100,foo.Gettheta0in()-1E-3, foo.Gettheta0in()+1E-3); // crea l'istogramma
-   for (int i=0;i<N; ++i){
-   histo4.Fill(theta0[i]); // riempe l'istogramma
-   }
-   histo4.GetXaxis()->SetTitle("X[rad]"); // da il nome all'asse X
-   histo4.GetYaxis()->SetTitle("Y"); // da il nome all'asse Y
-   histo4.Draw();
    // definisco un altra tela per i dm
   TCanvas tela3("c2","c2",1200,400);
   tela3.Divide(3,1);
@@ -76,15 +52,40 @@ histo1.Fill(theta1[i],theta2[i]);
    corrdm12.Fill(dm1[i],dm2[i]);
    histo5.Fill(dm1[i]); // riempe l'istogramma
       u = foo.GetA() - foo.Getain();
-      std::cout << "a_misurato " << foo.GetA() << std::endl;
       A.Fill(u);
       v = foo.GetB() - foo.Getbin();
       B.Fill(v);
 
       corrAB.Fill(u,v);
    }
+   // riempio gli istogrammi dei vari theta
+  tela2.cd(3);            // sposta il cursore sulla prima parte della canvas
+   TH1D histo3("theta2","theta2",100,foo.Gettheta2in()-1E-3, foo.Gettheta2in()+1E-3); // crea l'istogramma
+   for (int i=0;i<N; ++i){
+   histo3.Fill(theta2[i]); // riempe l'istogramma
+   }
+   histo3.GetXaxis()->SetTitle("X[rad]"); // da il nome all'asse X
+   histo3.GetYaxis()->SetTitle("Y"); // da il nome all'asse Y
+   histo3.Draw();
+  tela2.cd(2);            // sposta il cursore sulla prima parte della canvas
+   TH1D histo2("theta1","theta1",100,foo.Gettheta1in()-1E-3, foo.Gettheta1in()+1E-3); // crea l'istogramma
+   histo2.GetXaxis()->SetTitle("X[rad]"); // da il nome all'asse X
+   histo2.GetYaxis()->SetTitle("Y"); // da il nome all'asse Y
+   for (int i=0;i<N; ++i){
+   histo2.Fill(theta1[i]); // riempe l'istogramma
+   }
+   histo2.Draw();
+   tela2.cd(1);
+   TH1D histo4("theta0","theta0",100,foo.Gettheta0in()-1E-3, foo.Gettheta0in()+1E-3); // crea l'istogramma
+   for (int i=0;i<N; ++i){
+   histo4.Fill(theta0[i]); // riempe l'istogramma
+   }
+   histo4.GetXaxis()->SetTitle("X[rad]"); // da il nome all'asse X
+   histo4.GetYaxis()->SetTitle("Y"); // da il nome all'asse Y
+   histo4.Draw();
    histo5.GetXaxis()->SetTitle("X[rad]"); // da il nome all'asse X
    histo5.GetYaxis()->SetTitle("Y"); // da il nome all'asse Y
+tela3.cd(1);
    histo5.Draw();
    // dm2 
   tela3.cd(2);

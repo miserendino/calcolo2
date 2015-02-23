@@ -2,7 +2,6 @@
 #define ESPERIMENTOPRISMA_HPP
 #include <cmath>
 #include <random>
-#include <iostream>
 using namespace std;
 #define M_PI           3.14159265358979323846  /* pi */
 
@@ -120,7 +119,6 @@ void EsperimentoPrisma::Esegui(){
       _sommat2 = _sommat2+t2_misurato;
 
       _cont++;
-      std::cout << "_cont " << _cont << std::endl;
 }
 double EsperimentoPrisma::Gettheta1(){
   return t1_misurato;
