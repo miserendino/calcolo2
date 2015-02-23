@@ -5,7 +5,7 @@
 #include "TCanvas.h"
 #include "TApplication.h"
 #include "TH2D.h"
-#define N 10000
+#define N 100000
 
 int main(int argc, char **argv){
 double dm1[N],dm2[N];
@@ -14,13 +14,6 @@ TApplication myapp("app",NULL,NULL); // crea l'interfaccia grafica
   TCanvas tela1;
 EsperimentoPrisma foo;
    TH2D histo1("histo", "Correlazione the theta1 e theta2", 10, foo.Gettheta1in()-1, foo.Gettheta1in()+1 , 10 ,  foo.Gettheta2in()-1,  foo.Gettheta2in()+1);
-for(int i=0; i< N;++i){
-  foo.Esegui();
-theta1[i]=foo.Gettheta1();
-theta0[i]=foo.Gettheta0();
-theta2[i]=foo.Gettheta2();
-histo1.Fill(theta1[i],theta2[i]);
-}
    histo1.Draw("SURF3");
    TCanvas tela2("c1","c1",1200,400);
    tela2.Divide(3,1);     // diveide la seconda canvas in tre parti distinte
@@ -60,14 +53,19 @@ histo1.Fill(theta1[i],theta2[i]);
    TH1D n1("n1", "Distribuzione di n1", 100, -(foo.Getn1()-foo.Getn1in()), (foo.Getn1()-foo.Getn1in())); 
    TH1D n2("n2", "Distribuzione di n2", 100, -(foo.Getn2()-foo.Getn2in()), (foo.Getn2()-foo.Getn2in())); 
    TH2F corrn12("corrn12","Residui n1,2",100,-(foo.Getn2()-foo.Getn2in()), (foo.Getn2()-foo.Getn2in()),100,-(foo.Getn2()-foo.Getn2in()), (foo.Getn2()-foo.Getn2in()));
-   TH1F A("A", "Distribuzione di A", 100, -foo.Getain(), foo.Getain());
-   TH1F B("B", "Distribuzione di B", 100, foo.GetB()-3E-11, foo.GetB()+3E-11);
-   TH2F corrAB("corrAB","Residui A,B",100, (foo.Getain())-1E-3 , foo.Getain()+1E-2,100,foo.Getbin()-1E-4,foo.Getbin()+1E-4);
+   TH1F A("A", "Distribuzione di A", 100, -foo.GetA(), foo.GetA());
+   TH1F B("B", "Distribuzione di B", 100, -foo.GetB(), foo.GetB());
+   TH2F corrAB("corrAB","Residui A,B",100, -foo.GetA(), foo.GetA() ,100, -foo.GetB(), foo.GetB());
+
 // *******************************************************************************************
 double u,v;
    for (int i=0;i<N; ++i){
-     foo.Esegui();
-     foo.Analizza();
+  foo.Esegui();
+  foo.Analizza();
+theta1[i]=foo.Gettheta1();
+theta0[i]=foo.Gettheta0();
+theta2[i]=foo.Gettheta2();
+histo1.Fill(theta1[i],theta2[i]);
       u = foo.Getn1() - foo.Getn1in();
       n1.Fill(u);
       v = foo.Getn2() - foo.Getn2in();
@@ -77,6 +75,13 @@ double u,v;
   dm2[i]=foo.Getdm2();
    corrdm12.Fill(dm1[i],dm2[i]);
    histo5.Fill(dm1[i]); // riempe l'istogramma
+      u = foo.GetA() - foo.Getain();
+      std::cout << "a_misurato " << foo.GetA() << std::endl;
+      A.Fill(u);
+      v = foo.GetB() - foo.Getbin();
+      B.Fill(v);
+
+      corrAB.Fill(u,v);
    }
    histo5.GetXaxis()->SetTitle("X[rad]"); // da il nome all'asse X
    histo5.GetYaxis()->SetTitle("Y"); // da il nome all'asse Y
@@ -87,13 +92,6 @@ double u,v;
    for (int i=0;i<N; ++i){
    histo6.Fill(dm2[i]); // riempe l'istogramma
 
-      u = foo.GetA() - foo.Getain();
-      A.Fill(u);
-
-      v = foo.GetB() - foo.Getbin();
-      B.Fill(v);
-
-      corrAB.Fill(u,v);
       }
    histo6.GetXaxis()->SetTitle("X[rad]"); // da il nome all'asse X
    histo6.GetYaxis()->SetTitle("Y"); // da il nome all'asse Y
@@ -130,7 +128,7 @@ double u,v;
 
    cout << "       Correlazione tra n1 ed n2 = " << setprecision(4) << foo.Get_corrn() << endl << endl;
 
-   cout << "  A = " << setprecision(5) << foo.Getain() << endl;
+   cout << "  A = " << setprecision(5) << foo.GetA() << endl;
    cout << "  B = " << setprecision(4) << foo.GetB() << " m2" << endl << endl;
 
    cout << "    sigmaA = " << setprecision(2) << foo.Get_devA() << endl;

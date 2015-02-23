@@ -2,6 +2,7 @@
 #define ESPERIMENTOPRISMA_HPP
 #include <cmath>
 #include <random>
+#include <iostream>
 using namespace std;
 #define M_PI           3.14159265358979323846  /* pi */
 
@@ -42,8 +43,8 @@ class EsperimentoPrisma {
   private:                
     double lambda1,lambda2; 
     double alpha;
-    double a_input, a_misurato;
-    double b_input, b_misurato;
+    double a_input, a_misurato=0;
+    double b_input, b_misurato=0;
     double n1_input, n1_misurato;
     double n2_input, n2_misurato;
     double t0_input, t0_misurato;
@@ -119,6 +120,7 @@ void EsperimentoPrisma::Esegui(){
       _sommat2 = _sommat2+t2_misurato;
 
       _cont++;
+      std::cout << "_cont " << _cont << std::endl;
 }
 double EsperimentoPrisma::Gettheta1(){
   return t1_misurato;
@@ -248,9 +250,9 @@ double EsperimentoPrisma::Get_corrAB() {
 void EsperimentoPrisma::Analizza(){
 dm1=t1_misurato-t0_misurato;
 dm2=t2_misurato-t0_misurato;
-n1_misurato=(sin(dm1+alpha)/2)/sin(alpha/2);
-n2_misurato=(sin(dm2+alpha)/2)/sin(alpha/2);
-a_misurato=pow(lambda2,2)*pow(n2_misurato,2)-pow(n1_misurato,2)*pow(lambda1,2)/(pow(lambda2,2)-pow(lambda1,2));
+n1_misurato=sin((dm1+alpha)/2)/sin(alpha/2);
+n2_misurato=sin((dm2+alpha)/2)/sin(alpha/2);
+a_misurato= (pow(lambda2*n2_misurato,2)-pow(lambda1*n1_misurato,2))/(lambda2*lambda2-lambda1*lambda1);
 b_misurato=(pow(n2_misurato,2)-pow(n1_misurato,2))/(pow(lambda2,-2)-pow(lambda1,-2));
 
      _devA = _devA + pow(a_input-a_misurato,2);
