@@ -8,7 +8,6 @@
 #include "funzione.hpp"
 #include "integratore.hpp"
 
-
 using namespace std;
 
 int main (int argc, char**argv){
@@ -29,7 +28,6 @@ int main (int argc, char**argv){
    funzionebase *f = new caratteristica(raggio);         // definizione di una funzione caratteristica con raggio uguale a 1
    integral *integrale = new integral(-raggio,raggio,f); 
 
-   cout << endl << "Dimensione : " << dim << endl;
 
    integrale->setdim(dim);
 
@@ -45,9 +43,8 @@ int main (int argc, char**argv){
       sommadev = sommadev + ris*ris;
 
    }
-
+   
    media = somma/l;
-
    dev = sqrt((sommadev/l) - media*media);
 
    cout << endl << "  Con 10000 punti e ripetendo " << l << " volte ho Sn/Rn = " << setprecision(4) << media << " e RMS =  " << setprecision(2) << dev;
@@ -67,7 +64,6 @@ int main (int argc, char**argv){
    }
 
    media = somma/l;
-
    dev = sqrt((sommadev/l) - media*media);
 
    cout << endl << "  Con 40000 punti e ripetendo " << l << " volte ho Sn/Rn = " << setprecision(4) << media << " e RMS =  " << setprecision(2) << dev;

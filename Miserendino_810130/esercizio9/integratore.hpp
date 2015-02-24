@@ -38,6 +38,7 @@ integral::integral(double a,double b,funzionebase *f){
 	Mb=max(a,b);
 	if (a>b) Msign=-1;
 	else Msign=1;
+  srand (time(NULL));
 }
 
 
@@ -106,7 +107,6 @@ double integral::trapezi(){
 }
 
 double integral::montecarlo(int nstep){
-    srand (time(NULL));
 	double *v = new double[_dim];
 	double Ns=0.;
 	for(unsigned int i=0; i<nstep; ++i){		//ciclo per il numero di punti richiesto

@@ -2,8 +2,7 @@
 include ../Makefile.arch
 
 OBJECTS := $(wildcard *.o)
-#DEBUGFLAGS := -O0 -std=c++11 -pg -g -D DEBUG -Wall -v -fmessage-length=0 -flto-report -pedantic -time
-DEBUGFLAGS := -std=c++11
+DEBUGFLAGS := -O0 -std=c++11 -pg -g -D DEBUG -Wall -v -fmessage-length=0 -flto-report -pedantic -time
 ROOTLIBS := $(shell root-config --glibs)
 ROOTFLAGS := $(shell root-config --cflags)
 EXECUTABLES := esercizio9.0 esercizio9.1
