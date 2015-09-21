@@ -26,7 +26,7 @@ int main (int argc, char**argv){
    TH1F d("Sn/Rn 4", "160000 punti", 25, 0.518, 0.53);
 
    funzionebase *f = new caratteristica(raggio);         // definizione di una funzione caratteristica con raggio uguale a 1
-   integral *integrale = new integral(-raggio,raggio,f); 
+   integral *integrale = new integral(-raggio,raggio,f); // definisco il dominio di integrazione e la funzione integranda
 
 
    integrale->setdim(dim);

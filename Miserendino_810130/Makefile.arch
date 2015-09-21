@@ -7,3 +7,4 @@ else
 CXX := $(CXX)
 endif
 
+CXX := $(CXX) -fPIC 

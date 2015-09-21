@@ -56,12 +56,13 @@ double integral::simpson(int nstep){
   return -1;
   }
 Msum=0.;
-Mh=(Mb-Ma)/nstep;
+Mh=(Mb-Ma)/nstep;       // larghezza dell'intervallo dentro cui approssimo la funzione
   for(int k=1; k<nstep-2; k=k+2){
 double x=Ma+k*Mh;
-    Msum+=4./3.*Mintegrand->eval(x)+2./3.*Mintegrand->eval(x+Mh);
+    Msum+=4./3.*Mintegrand->eval(x)+2./3.*Mintegrand->eval(x+Mh);   // vado avanti nell'intervallo a due a due
   }
-    Msum+=4./3.*Mintegrand->eval(Mb-Mh)+1./3.*(Mintegrand->eval(Ma)+Mintegrand->eval(Mb));
+            // ne manca uno nel ciclo for che di sicuro è dispari
+    Msum+=4./3.*Mintegrand->eval(Mb-Mh)+1./3.*(Mintegrand->eval(Ma)+Mintegrand->eval(Mb)); // sono i valori agli estremi dell'intervallo che vanno moltiplicati per 1/3
       Mintegral=Msign*Msum*Mh;
         return Mintegral;
 }

@@ -67,10 +67,10 @@ srand (time(NULL));
 	_f=f;
 	_max=max;
 	s = new Random (rand() % 10 + 1);			// i semi vengono generati casualmente	
-	t = new Random (rand() % 10 + 1);				
+	t = new Random (rand() % 10 + 1);			 	
 	s->setA(1664525);
 	s->setC(1013904223);
-	s->setM(pow(2,31));
+	s->setM(pow(2,31));     // setto i valori dei due Random che ho definito dinamicamente
 	t->setA(1664525);
 	t->setC(1013904223);
 	t->setM(pow(2,31));
@@ -78,7 +78,7 @@ srand (time(NULL));
 
 acceptreject::~acceptreject(){
 	delete s;
-	delete t;
+	delete t;   // distruttori dei valori creati dinamicamente ---> evito memory leak
 	}
 
 // applicazione del metodo accept-reject
@@ -88,7 +88,7 @@ double acceptreject::Rand(){
 	do {
 		x=_a+(_b-_a)*s->Rand01();
 		y=_max*t->Rand01();
-		Y=_f->eval(x);
+		Y=_f->eval(x);      // continua a tirare un numero casuale finchè non trovi una y che sia inferiore del massimo valore assunto dalla funzione in quel punto
 		} while(y>=Y);
 	return x;
 	}

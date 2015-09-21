@@ -1,5 +1,5 @@
 //Verifica del Teorema del Limite Centrale
-
+// in questo esercizio sommo tutti i miei valori in serie di 10 di quello che voglio
 #include <iostream>
 #include <cstdlib>
 #include <cmath>
@@ -26,7 +26,7 @@ int main (int argc, char**argv){
    double* v = new double [ng];
    double* vsomma = new double [ng-(ng%es)];
 
-   Random random(21);
+   Random random(21); // inizializzo con un seed arbitrario
 
    random.setA(1664525); 
    random.setC(1013904223);     // assegno i vari numeri da dare in pasto al generatore di numeri casuali
@@ -98,7 +98,6 @@ int main (int argc, char**argv){
    for(i=0; i<(ng-(ng%es))/es; i++)
       t+=pow( vsomma[i],2 );
    vars = (t/((ng-(ng%es))/es)) - medias*medias;
-
    cout << "Varianza serie somme : " << vars << endl << endl;
 
    delete[] v;

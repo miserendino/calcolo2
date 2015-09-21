@@ -14,7 +14,7 @@ using namespace std;
 
 class integral {
 	public:
-		integral(double a, double b, funzionebase *f);
+		integral(double a, double b, funzionebase *f);      // a -> estremo inferiore  b -> estremo superiore
 		integral(double , double , double , funzionebase* );
 		double midpoint(int nstep);
 		double trapezi();
